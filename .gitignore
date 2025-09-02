@@ -1,0 +1,14 @@
+node_modules
+yarn.lock
+
+.DS_Store
+.cache
+.env
+.vercel
+.output
+.nitro
+/build/
+/api/
+/server/build
+/playwright/.cache/
+.tanstack
