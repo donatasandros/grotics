@@ -6,8 +6,12 @@ export const Route = createFileRoute("/_authenticated/")({
 
 function RouteComponent() {
   return (
-    <center>
-      <h1 className="font-extrabold text-2xl">Welcome</h1>
-    </center>
+    <>
+      <div className="px-4 lg:px-8">section 1</div>
+    </>
   );
 }
+
+// dashboard, transactions, shops, alerts, settings
+// modules/dashboard
+// components/sidebar
