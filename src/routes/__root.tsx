@@ -70,7 +70,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="antialiased font-display min-h-screen flex flex-col">
+      <body className="antialiased font-display bg-white dark:bg-gray-950 min-h-screen flex flex-col">
         {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />

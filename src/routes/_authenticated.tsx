@@ -35,7 +35,7 @@ function LayoutComponent() {
   return (
     <SidebarProvider defaultOpen={sidebarState}>
       <AppSidebar />
-      <SidebarInset className="md:peer-data-[state=collapsed]:pl-[calc(72px)]">
+      <SidebarInset className="md:peer-data-[state=collapsed]:pl-[calc(72px)] max-w-[1216px] mx-auto">
         <AppHeader />
         <div className="flex flex-col text-black dark:text-white  min-h-screen">
           <Outlet />

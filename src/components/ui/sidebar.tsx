@@ -259,10 +259,10 @@ function SidebarTrigger({
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       className={cn(
-        "rounded-md text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-500 flex items-center justify-center [&>svg]:size-4 p-1",
+        "rounded-md text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-500 flex items-center justify-center [&>svg]:size-4 ",
         state === "expanded"
           ? "bg-transparent"
-          : "bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 shadow-xs",
+          : "bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 shadow-xs p-1",
         className,
       )}
       onClick={(event) => {
