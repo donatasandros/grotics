@@ -2,6 +2,7 @@ import {
   boolean,
   index,
   integer,
+  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -76,6 +77,8 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const botModeEnum = pgEnum("bot_mode", ["full", "alerts_only"]);
+
 export const world = pgTable("world", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -83,6 +86,7 @@ export const world = pgTable("world", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  botMode: botModeEnum("bot_mode").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
