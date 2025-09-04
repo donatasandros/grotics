@@ -1,53 +1,50 @@
-    import Logo from "@/components/logo"
+import Logo from "@/components/logo";
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { Link } from "@tanstack/react-router"
-import { MoonIcon } from "lucide-react"
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import NavMain from "@/modules/dashboard/components/nav-main";
+import NavSecondary from "@/modules/dashboard/components/nav-secondary";
+import NavUser from "@/modules/dashboard/components/nav-user";
+import {
+  NAV_MAIN,
+  NAV_SECONDARY,
+} from "@/modules/dashboard/constants/navigation";
+import { Link, useRouteContext } from "@tanstack/react-router";
 
 export default function AppSidebar() {
+  const { state, isMobile } = useSidebar();
+
+  const { session } = useRouteContext({
+    from: "/_authenticated/",
+  });
+
   return (
-    <Sidebar collapsible="none" className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r">
-      <SidebarHeader>
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <SidebarMenuButton className="h-8">
-                    <Link to="/">
-                    <Logo className="size-8" />
-                        </Link>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-        </SidebarMenu>
+    <Sidebar collapsible="icon">
+      <SidebarHeader className=" flex-row flex items-center justify-between border-b bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800">
+        <Link to="/">
+          <Logo className="size-8 group-data-[state=expanded]:hidden max-md:hidden" />
+          <Logo
+            type="combination"
+            className="h-8 w-fit group-data-[state=collapsed]:hidden"
+          />
+        </Link>
+        {state === "expanded" && <SidebarTrigger />}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-            <SidebarGroupContent>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton tooltip={{
-                            children: "Dashboard",
-                            hidden: false
-                        }}>
-
-                            <MoonIcon />
-                            <span>Dashboard</span>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={NAV_MAIN} />
+        <NavSecondary items={NAV_SECONDARY} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <div className="size-10 bg-blue-500 rounded-full">U</div>
+        <NavUser user={session!.user} />
       </SidebarFooter>
+      {state === "collapsed" && !isMobile && (
+        <SidebarTrigger className="absolute -right-3.5 top-4.5 z-10 " />
+      )}
     </Sidebar>
-  )
+  );
 }
