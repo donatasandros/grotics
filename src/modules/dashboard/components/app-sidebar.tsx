@@ -20,7 +20,7 @@ export default function AppSidebar() {
   const { state, isMobile } = useSidebar();
 
   const { session } = useRouteContext({
-    from: "/_authenticated/",
+    from: "/_authenticated",
   });
 
   return (
@@ -40,7 +40,7 @@ export default function AppSidebar() {
         <NavSecondary items={NAV_SECONDARY} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={session!.user} />
+        <NavUser user={session.user} />
       </SidebarFooter>
       {state === "collapsed" && !isMobile && (
         <SidebarTrigger className="absolute -right-3.5 top-4.5 z-10 " />

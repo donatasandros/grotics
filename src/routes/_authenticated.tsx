@@ -22,6 +22,7 @@ export const Route = createFileRoute("/_authenticated")({
     const sidebarState = await getSidebarState();
 
     return {
+      session,
       sidebarState,
     };
   },
