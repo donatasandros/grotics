@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -127,3 +128,10 @@ export const transaction = pgTable("transaction", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const transactionRelations = relations(transaction, ({ one }) => ({
+  world: one(world, {
+    fields: [transaction.worldId],
+    references: [world.id],
+  }),
+}));

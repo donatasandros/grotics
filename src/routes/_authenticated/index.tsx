@@ -1,5 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTRPC } from "@/trpc/react";
 import { getInitials } from "@/utils/get-initials";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
 import {
   AlertTriangleIcon,
@@ -9,10 +11,19 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/")({
+  loader: async ({ context }) =>
+    await context.queryClient.ensureQueryData(
+      context.trpc.transaction.getAll.queryOptions(),
+    ),
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const trpc = useTRPC();
+  const { data: transactions } = useSuspenseQuery(
+    trpc.transaction.getAll.queryOptions(),
+  );
+
   const {
     session: { user },
   } = useRouteContext({
@@ -39,6 +50,7 @@ function RouteComponent() {
 
   return (
     <div className="py-8 px-4 md:p-8 space-y-8">
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
       <section className="space-y-4">
         <div className="flex items-center gap-1 max-md:hidden">
           <div className="flex items-center gap-1">
