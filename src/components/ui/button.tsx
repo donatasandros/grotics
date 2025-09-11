@@ -6,7 +6,7 @@ import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
 const buttonVariants = cva(
-  "group relative inline-flex h-max items-center justify-center whitespace-nowrap  before:absolute outline-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none [&>svg]:size-5 [&>svg]:shrink-0",
+  "group relative inline-flex h-max items-center justify-center whitespace-nowrap before:absolute outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none [&>svg]:size-5 [&>svg]:shrink-0",
   {
     variants: {
       size: {
