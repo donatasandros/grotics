@@ -8,6 +8,15 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
+  user: {
+    additionalFields: {
+      hasOnboarded: {
+        type: "boolean",
+        input: false,
+        defaultValue: false,
+      },
+    },
+  },
   socialProviders: {
     discord: {
       clientId: process.env.DISCORD_CLIENT_ID as string,
