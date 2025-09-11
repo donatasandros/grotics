@@ -59,7 +59,10 @@ export default function OnboardingModal() {
 
   return (
     <Dialog open={open}>
-      <DialogContent showCloseButton={false} className="md:max-w-[400px]">
+      <DialogContent
+        showCloseButton={false}
+        className="md:max-w-[400px] overflow-hidden"
+      >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
@@ -72,7 +75,7 @@ export default function OnboardingModal() {
                 "onboarding-success": () => <SuccessStep />,
               })}
             </div>
-            <div className="flex items-center gap-4 justify-center">
+            <div className="flex items-center gap-4 justify-center relative z-10">
               {stepper.all.map((step) => (
                 <div
                   key={step.id}

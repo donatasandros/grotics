@@ -1,3 +1,4 @@
+import { ConcentricCircles } from "@/components/decorations";
 import {
   DialogDescription,
   DialogHeader,
@@ -6,6 +7,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Schema1Values } from "@/modules/onboarding/components/onboarding-modal";
+import { StoreIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
 export default function WorldStep() {
@@ -17,7 +19,13 @@ export default function WorldStep() {
   return (
     <>
       <DialogHeader className="mb-5">
-        <div className="text-center space-y-0.5 ">
+        <div className="relative mb-4">
+          <div className="size-12 mx-auto bg-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-950 shadow-xs-skeumorphic rounded-[10px] flex items-center justify-center">
+            <StoreIcon className="size-6 text-gray-700 dark:text-gray-300" />
+          </div>
+          <ConcentricCircles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " />
+        </div>
+        <div className="text-center space-y-0.5 z-10">
           <DialogTitle>Add your shop</DialogTitle>
           <DialogDescription>
             Enter the name of your world. We’ll scan your vending machines to
@@ -25,7 +33,7 @@ export default function WorldStep() {
           </DialogDescription>
         </div>
       </DialogHeader>
-      <div className="mb-5">
+      <div className="mb-5 z-10">
         <div className="space-y-1">
           <Label htmlFor={register("worldName").name}>World name</Label>
           <Input
