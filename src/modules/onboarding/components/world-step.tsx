@@ -26,12 +26,14 @@ export default function WorldStep() {
         </div>
       </DialogHeader>
       <div className="mb-5">
-        <div>
-          <Label htmlFor={register("worldName").name}>label</Label>
+        <div className="space-y-1">
+          <Label htmlFor={register("worldName").name}>World name</Label>
           <Input
             type="text"
             id={register("worldName").name}
             {...register("worldName")}
+            placeholder="SHOPWORLD123"
+            aria-invalid={!!errors.worldName}
           />
           {errors.worldName && (
             <span className="text-sm text-red-500">
