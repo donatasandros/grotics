@@ -1,105 +1,106 @@
-import {
-  DialogStack,
-  DialogStackBody,
-  DialogStackContent,
-  DialogStackFooter,
-  DialogStackHeader,
-  DialogStackOverlay,
-  DialogStackTitle,
-} from "@/components/ui/shadcn-io/dialog-stack";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { Form } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import ScanningStep from "@/modules/onboarding/components/scanning-step";
+import SuccessStep from "@/modules/onboarding/components/success-step";
+import WelcomeStep from "@/modules/onboarding/components/welcome-step";
+import WorldStep from "@/modules/onboarding/components/world-step";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { defineStepper } from "@stepperize/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+const schema1 = z.object({
+  worldName: z.string().min(1),
+});
+
+export type Schema1Values = z.infer<typeof schema1>;
 
 export default function OnboardingModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState(0);
+  const [open, setOpen] = useState(true);
+
+  const { useStepper } = defineStepper(
+    {
+      id: "onboarding-welcome",
+      schema: z.object({}),
+    },
+    {
+      id: "onboarding-world",
+      schema: schema1,
+    },
+    {
+      id: "onboarding-scanning",
+      schema: z.object({}),
+    },
+    {
+      id: "onboarding-success",
+      schema: z.object({}),
+    },
+  );
+
+  const stepper = useStepper();
+
+  const form = useForm({
+    mode: "onTouched",
+
+    resolver: zodResolver(stepper.current.schema),
+  });
+
+  const onSubmit = (values: z.infer<typeof stepper.current.schema>) => {
+    console.log(`Form values for step ${stepper.current.id}:`, values);
+    if (stepper.isLast) {
+      setOpen(false);
+    } else {
+      stepper.next();
+    }
+  };
 
   return (
-    // <Dialog open>
-    //   <DialogContent showCloseButton={false} className="md:max-w-[400px]">
-    //     <DialogHeader className="">
-    //       <Logo className="size-12 mx-auto mb-5 md:mb-6" />
-    //       <div className="text-center space-y-0.5 mb-5">
-    //         <DialogTitle>Welcome to Grotics</DialogTitle>
-    //         <DialogDescription>
-    //           Thanks for signing up! Before we can show you analytics, let’s
-    //           connect your first shop.
-    //         </DialogDescription>
-    //       </div>
-    //       <div className="flex items-center gap-4 justify-center">
-    //         {Array.from({ length: 4 }).map((_, i) => (
-    //           <div
-    //             key={i}
-    //             className="size-2.5 first:bg-brand-600 dark:first:bg-gray-300 rounded-full bg-gray-200 dark:bg-gray-700"
-    //           />
-    //         ))}
-    //       </div>
-    //     </DialogHeader>
-    //     <DialogFooter>
-    //       <Button className="w-full">Continue</Button>
-    //     </DialogFooter>
-    //   </DialogContent>
-    // </Dialog>
-    // <Dialog open>
-    //   <DialogContent showCloseButton={false} className="md:max-w-[480px]">
-    //     <DialogHeader className="">
-    //       <Logo className="size-12 mx-auto mb-5 md:mb-6" />
-    //       <div className="text-center space-y-0.5 mb-5">
-    //         <DialogTitle>Connect your shop</DialogTitle>
-    //         <DialogDescription>
-    //           Enter your world name below. We'll automatically scan your vending
-    //           machines and start tracking everything in real-time.
-    //         </DialogDescription>
-    //       </div>
-    //       <div className="flex items-center gap-4 justify-center">
-    //         {Array.from({ length: 4 }).map((_, i) => (
-    //           <div
-    //             key={i}
-    //             className="size-2.5 first:bg-brand-600 dark:first:bg-gray-300 rounded-full bg-gray-200 dark:bg-gray-700"
-    //           />
-    //         ))}
-    //       </div>
-    //     </DialogHeader>
-    //     <DialogFooter>
-    //       <Button className="w-full">Continue</Button>
-    //     </DialogFooter>
-    //   </DialogContent>
-    // </Dialog>
-    <>
-      <button onClick={() => setIsOpen(true)}>Start Dialog Flow</button>
+    <Dialog open={open}>
+      <DialogContent showCloseButton={false} className="md:max-w-[400px]">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              {stepper.switch({
+                "onboarding-welcome": () => <WelcomeStep />,
+                "onboarding-world": () => <WorldStep />,
+                "onboarding-scanning": () => (
+                  <ScanningStep next={stepper.next} />
+                ),
+                "onboarding-success": () => <SuccessStep />,
+              })}
+            </div>
+            <div className="flex items-center gap-4 justify-center">
+              {stepper.all.map((step) => (
+                <div
+                  key={step.id}
+                  aria-current={
+                    stepper.current.id === step.id ? "step" : undefined
+                  }
+                  className={cn(
+                    "size-2.5 rounded-full",
+                    stepper.current.id === step.id
+                      ? "bg-brand-600 dark:bg-gray-300"
+                      : "bg-gray-200 dark:bg-gray-700",
+                  )}
+                />
+              ))}
+            </div>
 
-      <DialogStack open={isOpen} value onOpenChange={setIsOpen}>
-        <DialogStackOverlay />
-
-        <DialogStackBody>
-          <DialogStackContent index={0}>
-            <DialogStackHeader>
-              <DialogStackTitle>Step 1</DialogStackTitle>
-            </DialogStackHeader>
-            <DialogStackFooter>
-              <button onClick={() => setStep(1)}>Go to Step 2</button>
-            </DialogStackFooter>
-          </DialogStackContent>
-
-          <DialogStackContent index={1}>
-            <DialogStackHeader>
-              <DialogStackTitle>Step 2</DialogStackTitle>
-            </DialogStackHeader>
-            <DialogStackFooter>
-              <button onClick={() => setStep(0)}>Back</button>
-              <button onClick={() => setStep(2)}>Next</button>
-            </DialogStackFooter>
-          </DialogStackContent>
-
-          <DialogStackContent index={2}>
-            <DialogStackHeader>
-              <DialogStackTitle>Final Step</DialogStackTitle>
-            </DialogStackHeader>
-            <DialogStackFooter>
-              <button onClick={() => setIsOpen(false)}>Close</button>
-            </DialogStackFooter>
-          </DialogStackContent>
-        </DialogStackBody>
-      </DialogStack>
-    </>
+            <DialogFooter className="mt-6 md:mt-8">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={stepper.current.id === "onboarding-scanning"}
+              >
+                {stepper.isLast ? "Finish" : "Continue"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
