@@ -5,8 +5,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { Schema1Values } from "@/modules/onboarding/components/onboarding-modal";
+import { useTRPC } from "@/trpc/react";
+import { useQuery } from "@tanstack/react-query";
 import { CircleCheckIcon, Loader2Icon, SearchIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface ScanningStepProps {
@@ -14,38 +16,34 @@ interface ScanningStepProps {
 }
 
 const steps = [
-  "Connecting to the world",
-  "Scanning vending machines",
-  "Setting up dashboard",
+  { label: "Connecting to the world", key: "connecting" },
+  { label: "Scanning vending machines", key: "scanning" },
+  { label: "Setting up dashboard", key: "setting" },
 ];
 
 export default function ScanningStep({ next }: ScanningStepProps) {
   const { getValues } = useFormContext<Schema1Values>();
+  const trpc = useTRPC()
 
   const { worldName } = getValues();
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const { data, isRefetching } = useQuery(trpc.world.status.queryOptions({
+    name: worldName,
+    
+  }, {
+    refetchInterval: 3000,
+    
+
+  }))
+  
+
+  const currentStepIndex = steps.findIndex((s) => s.key === data);
 
   useEffect(() => {
-    const timers: NodeJS.Timeout[] = [];
-    for (let index = 0; index < steps.length; index++) {
-      const timer = setTimeout(
-        () => {
-          setCurrentStep(index + 1);
-          if (index === steps.length - 1) {
-            // after last step → continue
-            setTimeout(() => next(), 0);
-          }
-        },
-        (index + 1) * 3000,
-      );
-      timers.push(timer);
+    if (data === "finished") {
+      next();
     }
-    return () => {
-      // biome-ignore lint/suspicious/useIterableCallbackReturn: asdasd
-      timers.forEach((timer) => clearTimeout(timer));
-    };
-  }, [next]);
+  }, [data, next]);
 
   return (
     <>
@@ -66,17 +64,18 @@ export default function ScanningStep({ next }: ScanningStepProps) {
         </div>
       </DialogHeader>
       <div className="mb-5 flex flex-col gap-3 z-10">
+      
         {steps.map((step, index) => (
-          <div key={step} className="flex items-center  gap-2">
-            {currentStep === index ? (
+          <div key={step.key} className="flex items-center gap-2">
+            {index === currentStepIndex ? (
               <Loader2Icon className="size-5 text-gray-300 dark:text-gray-600 animate-spin" />
-            ) : currentStep > index ? (
+            ) : index < currentStepIndex ? (
               <CircleCheckIcon className="size-5 text-brand-600 dark:text-brand-600" />
             ) : (
               <div className="size-5" />
             )}
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              {step}
+              {step.label}
             </span>
           </div>
         ))}

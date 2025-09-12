@@ -15,4 +15,14 @@ export const worldRouter = {
         userId: ctx.session.user.id,
       });
     }),
+    status: protectedProcedure.input(z.object({name: z.string()})).query(async ({ctx, input}) => {
+        const statuses = ["connecting", "scanning", "setting"]
+
+        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
+
+        return randomStatus
+
+
+
+    })
 };
