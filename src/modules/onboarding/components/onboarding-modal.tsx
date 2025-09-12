@@ -43,15 +43,10 @@ export default function OnboardingModal() {
     },
   );
 
-  function wait(ms: number) {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
   const stepper = useStepper();
 
   const myMutation = useMutation(trpc.world.create.mutationOptions());
+  const myMutation2 = useMutation(trpc.user.finishOnboarding.mutationOptions());
 
   const form = useForm({
     mode: "onTouched",
@@ -68,8 +63,6 @@ export default function OnboardingModal() {
 
       case "onboarding-world":
         try {
-          // await wait(500000);
-          console.log("calling");
           await myMutation.mutateAsync({ name: values.worldName });
 
           stepper.next();
@@ -79,7 +72,12 @@ export default function OnboardingModal() {
         break;
 
       case "onboarding-success":
-        setOpen(false);
+        try {
+          myMutation2.mutate();
+          setOpen(false);
+        } catch (err) {
+          console.log("failed to complete onboarding", err);
+        }
         break;
     }
   };

@@ -1,9 +1,14 @@
-import type { TRPCRouterRecord } from "@trpc/server";
-
+import { user } from "@/db/schema";
 import { protectedProcedure } from "@/trpc/init";
+import type { TRPCRouterRecord } from "@trpc/server";
+import { eq } from "drizzle-orm";
 
 export const userRouter = {
-  getAll: protectedProcedure.query(
-    async ({ ctx }) => await ctx.db.query.user.findMany(),
+  finishOnboarding: protectedProcedure.mutation(
+    async ({ ctx }) =>
+      await ctx.db
+        .update(user)
+        .set({ hasOnboarded: true })
+        .where(eq(user.id, ctx.session.user.id)),
   ),
 } satisfies TRPCRouterRecord;

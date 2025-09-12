@@ -5,6 +5,7 @@ import {
   integer,
   pgEnum,
   pgTable,
+  serial,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -82,13 +83,13 @@ export const verification = pgTable(
 export const botModeEnum = pgEnum("bot_mode", ["full", "alerts_only"]);
 
 export const world = pgTable("world", {
-  id: text("id").primaryKey(),
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   active: boolean("active").notNull().default(true),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  botMode: botModeEnum("bot_mode").notNull(),
+  botMode: botModeEnum("bot_mode").notNull().default("full"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
@@ -98,7 +99,7 @@ export const world = pgTable("world", {
 
 export const vend = pgTable("vend", {
   id: text("id").primaryKey(),
-  worldId: text("world_id")
+  worldId: integer("world_id")
     .notNull()
     .references(() => world.id, { onDelete: "cascade" }),
   item: text("item").notNull(),
@@ -116,7 +117,7 @@ export const vend = pgTable("vend", {
 
 export const transaction = pgTable("transaction", {
   id: text("id").primaryKey(),
-  worldId: text("world_id")
+  worldId: integer("world_id")
     .notNull()
     .references(() => world.id, { onDelete: "cascade" }),
   buyerGrowId: text("buyer_growid").notNull(),

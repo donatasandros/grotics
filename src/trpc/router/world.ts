@@ -12,9 +12,7 @@ export const worldRouter = {
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(world).values({
         name: input.name,
-        id: "loxas",
         userId: ctx.session.user.id,
-        botMode: "full",
       });
     }),
 };
