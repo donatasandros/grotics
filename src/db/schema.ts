@@ -18,7 +18,7 @@ export const user = pgTable(
     emailVerified: boolean("email_verified").notNull(),
     image: text("image"),
     name: text("name").notNull(),
-    hasOnboarded: boolean().notNull().default(false),
+    hasOnboarded: boolean("has_onboarded").notNull().default(false),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull(),
   },
