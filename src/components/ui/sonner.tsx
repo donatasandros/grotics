@@ -33,7 +33,7 @@ function Toast(props: ToastProps) {
   const Icon = toastIcons[type];
 
   return (
-    <div className="group relative flex flex-col gap-4 md:flex-row rounded-xl bg-white dark:bg-gray-900 border border-black/[0.08] dark:border-gray-800 shadow-lg min-w-full md:w-[400px] items-start p-4 pr-10">
+    <div className="group relative pointer-events-auto flex flex-col gap-4 md:flex-row rounded-xl bg-white dark:bg-gray-900 border border-black/[0.08] dark:border-gray-800 shadow-lg min-w-full md:w-[400px] items-start p-4 pr-10">
       <div
         className={cn(
           "relative flex shrink-0 items-center justify-center before:absolute before:rounded-full before:border-2 after:absolute after:rounded-full after:border-2 before:size-7 after:size-9.5 [&>svg]:size-5",

@@ -3,19 +3,19 @@ import z from "zod";
 
 export const onboardingSteps = [
   {
-    id: "onboarding-welcome",
+    id: "welcome",
     schema: z.object({}),
   },
   {
-    id: "onboarding-world",
+    id: "add-world",
     schema: createWorldSchema,
   },
   {
-    id: "onboarding-scanning",
+    id: "scanning-world",
     schema: z.object({}),
   },
   {
-    id: "onboarding-success",
+    id: "complete",
     schema: z.object({}),
   },
 ] as const;

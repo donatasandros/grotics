@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-export default function WelcomeStep() {
+export function Welcome() {
   return (
     <DialogHeader className="mb-5">
       <div className="relative mb-4">

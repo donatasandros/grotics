@@ -1,6 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
 import OverviewCards from "@/modules/dashboard/components/overview-cards";
 import { useTRPC } from "@/trpc/react";
 import { getInitials } from "@/utils/get-initials";
@@ -65,82 +63,6 @@ function RouteComponent() {
         </div>
       </section>
       <OverviewCards items={transactions} />
-      <Button
-        variant="linkColor"
-        onClick={() =>
-          toast({
-            type: "primary",
-            title: "Hello world",
-            description: "This is a toast",
-          })
-        }
-      >
-        Primary
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            type: "success",
-            title: "Hello world",
-            description: "This is a toast",
-          })
-        }
-      >
-        Success
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            type: "warning",
-            title: "Hello world",
-            description: "This is a toast",
-          })
-        }
-      >
-        Warning
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            type: "error",
-            title: "Hello world",
-            description: "This is a toast",
-          })
-        }
-      >
-        Error
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            type: "primary",
-            title: "Hello world",
-            description: "This is a toast",
-            action: {
-              label: "Action",
-              onClick: () => console.log("Action clicked"),
-            },
-          })
-        }
-      >
-        Error
-      </Button>
-      <Button
-        onClick={() =>
-          toast({
-            type: "primary",
-            title: "Hello world",
-            description: "This is a toast",
-            action: {
-              label: "Action",
-              onClick: () => console.log("Action clicked"),
-            },
-            showDismiss: true,
-          })
-        }
-      >
-        Error
-      </Button>
     </div>
   );
 }

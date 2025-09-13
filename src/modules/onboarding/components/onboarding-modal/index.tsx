@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { toast } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
-import ScanningStep from "@/modules/onboarding/components/scanning-step";
-import SuccessStep from "@/modules/onboarding/components/success-step";
-import WelcomeStep from "@/modules/onboarding/components/welcome-step";
-import WorldStep from "@/modules/onboarding/components/world-step";
+import { AddWorld } from "@/modules/onboarding/components/onboarding-modal/add-world";
+import { Complete } from "@/modules/onboarding/components/onboarding-modal/complete";
+import { ScanningWorld } from "@/modules/onboarding/components/onboarding-modal/scanning-world";
+import { Welcome } from "@/modules/onboarding/components/onboarding-modal/welcome";
+import { onboardingSteps } from "@/modules/onboarding/config/onboarding-steps";
 import { useTRPC } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { defineStepper } from "@stepperize/react";
@@ -13,61 +15,64 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { onboardingSteps } from "../config/onboarding-steps";
 
 export default function OnboardingModal() {
   const [open, setOpen] = useState(true);
+
   const trpc = useTRPC();
-
   const { useStepper } = defineStepper(...onboardingSteps);
-
   const stepper = useStepper();
+
+  const form = useForm({
+    mode: "onTouched",
+    resolver: zodResolver(stepper.current.schema),
+  });
 
   const createWorldMutation = useMutation(trpc.world.create.mutationOptions());
   const completeOnboardingMutation = useMutation(
     trpc.user.completeOnboarding.mutationOptions(),
   );
 
-  const form = useForm({
-    mode: "onTouched",
-
-    resolver: zodResolver(stepper.current.schema),
-  });
-
-  const onSubmit = async (values: z.infer<typeof stepper.current.schema>) => {
-    switch (stepper.current.id) {
-      case "onboarding-welcome":
-      case "onboarding-scanning":
-        stepper.next();
-        break;
-
-      case "onboarding-world":
-        try {
-          await createWorldMutation.mutateAsync({ name: values.name });
-
-          stepper.next();
-        } catch (err) {
-          handleError(err, "create world");
-        }
-        break;
-
-      case "onboarding-success":
-        try {
-          await completeOnboardingMutation.mutateAsync();
-          setOpen(false);
-        } catch (err) {
-          handleError(err, "complete onboarding");
-        }
-        break;
-    }
-  };
-
   const isSubmitting =
     createWorldMutation.isPending || completeOnboardingMutation.isPending;
 
-  function handleError(error: unknown, context: string) {
-    console.log(`Error in ${context}`, error);
-  }
+  const onSubmit = async (values: z.infer<typeof stepper.current.schema>) => {
+    switch (stepper.current.id) {
+      case "welcome":
+      case "scanning-world":
+        stepper.next();
+        break;
+
+      case "add-world":
+        await createWorldMutation.mutateAsync(
+          { name: values.name },
+          {
+            onError: (err) => {
+              toast({
+                type: "error",
+                title: "World creation failed",
+                description: err.message,
+              });
+            },
+          },
+        );
+        stepper.next();
+        break;
+
+      case "complete":
+        await completeOnboardingMutation.mutateAsync(undefined, {
+          onError: (err) => {
+            toast({
+              type: "error",
+              title: "Onboarding completion failed",
+              description: err.message,
+            });
+          },
+        });
+        setOpen(false);
+        break;
+    }
+  };
 
   return (
     <Dialog open={open}>
@@ -79,12 +84,10 @@ export default function OnboardingModal() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
               {stepper.switch({
-                "onboarding-welcome": () => <WelcomeStep />,
-                "onboarding-world": () => <WorldStep />,
-                "onboarding-scanning": () => (
-                  <ScanningStep next={stepper.next} />
-                ),
-                "onboarding-success": () => <SuccessStep />,
+                welcome: () => <Welcome />,
+                "add-world": () => <AddWorld />,
+                "scanning-world": () => <ScanningWorld next={stepper.next} />,
+                complete: () => <Complete />,
               })}
             </div>
             <div className="flex items-center gap-4 justify-center relative z-10">
@@ -110,7 +113,7 @@ export default function OnboardingModal() {
                 className="w-full"
                 isLoading={isSubmitting}
                 disabled={
-                  stepper.current.id === "onboarding-scanning" || isSubmitting
+                  stepper.current.id === "scanning-world" || isSubmitting
                 }
               >
                 {stepper.isLast ? "Complete" : "Continue"}

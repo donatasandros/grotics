@@ -10,7 +10,7 @@ import type { CreateWorldSchema } from "@/schemas/world";
 import { StoreIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-export default function WorldStep() {
+export function AddWorld() {
   const {
     register,
     formState: { errors },

@@ -84,7 +84,7 @@ export const botModeEnum = pgEnum("bot_mode", ["full", "alerts_only"]);
 
 export const world = pgTable("world", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
+  name: text("name").notNull().unique(),
   active: boolean("active").notNull().default(true),
   userId: text("user_id")
     .notNull()
