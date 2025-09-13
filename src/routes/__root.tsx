@@ -10,6 +10,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
+import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/lib/auth";
 import appCss from "@/styles/app.css?url";
 import type { AppRouter } from "@/trpc/router";
@@ -72,6 +73,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="antialiased font-display bg-white dark:bg-gray-950 min-h-screen flex flex-col">
         {children}
+        <Toaster />
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />

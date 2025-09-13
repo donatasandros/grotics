@@ -6,7 +6,7 @@ import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
 const buttonVariants = cva(
-  "group relative inline-flex h-max items-center justify-center whitespace-nowrap before:absolute outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none [&>svg]:size-5 [&>svg]:shrink-0",
+  "group relative inline-flex h-max items-center justify-center whitespace-nowrap before:absolute outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none *:[&>svg]:size-5 [&>svg]:shrink-0",
   {
     variants: {
       size: {
@@ -22,6 +22,10 @@ const buttonVariants = cva(
           "bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 shadow-xs-skeumorphic ring-1 ring-gray-300 dark:ring-gray-700 ring-inset hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-200 disabled:shadow-xs disabled:ring-gray-200 dark:disabled:ring-gray-800",
         tertiary:
           "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800",
+        linkGray:
+          "text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
+        linkColor:
+          "text-brand-700 dark:text-gray-300 hover:text-brand-800 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
       },
     },
     defaultVariants: {
