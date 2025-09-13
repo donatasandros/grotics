@@ -73,7 +73,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="antialiased font-display bg-white dark:bg-gray-950 min-h-screen flex flex-col">
         {children}
-        <Toaster />
+        <Toaster swipeDirections={["right", "bottom"]} />
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
