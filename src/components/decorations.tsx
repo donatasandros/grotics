@@ -33,7 +33,6 @@ export function ConcentricCircles({
       </mask>
       <g mask={`url(#${maskId})`}>
         <circle cx="168" cy="168" r="47.5" stroke="currentColor"></circle>
-        <circle cx="168" cy="168" r="47.5" stroke="currentColor"></circle>
         <circle cx="168" cy="168" r="71.5" stroke="currentColor"></circle>
         <circle cx="168" cy="168" r="95.5" stroke="currentColor"></circle>
         <circle cx="168" cy="168" r="119.5" stroke="currentColor"></circle>

@@ -37,7 +37,7 @@ export default function Logo({ type = "logomark", className }: LogoProps) {
             <g mask="url(#mask0_175_231)">
               <path
                 d="M36 0H12C5.37258 0 0 5.37258 0 12V36C0 42.6274 5.37258 48 12 48H36C42.6274 48 48 42.6274 48 36V12C48 5.37258 42.6274 0 36 0Z"
-                fill="#3B7C0F"
+                className="fill-brand-600"
               />
               <path d="M48 0H0V48H48V0Z" fill="url(#paint0_linear_175_231)" />
               <g filter="url(#filter1_d_175_231)">
@@ -332,7 +332,7 @@ export default function Logo({ type = "logomark", className }: LogoProps) {
             <g mask="url(#mask0_175_499)">
               <path
                 d="M36 0H12C5.37258 0 0 5.37258 0 12V36C0 42.6274 5.37258 48 12 48H36C42.6274 48 48 42.6274 48 36V12C48 5.37258 42.6274 0 36 0Z"
-                fill="#3B7C0F"
+                className="fill-brand-600"
               />
               <path d="M48 0H0V48H48V0Z" fill="url(#paint0_linear_175_499)" />
               <g filter="url(#filter1_d_175_499)">

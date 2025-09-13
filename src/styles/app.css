@@ -26,17 +26,17 @@
   --color-gray-900: oklch(20.99% 0.0341 263.44);
   --color-gray-950: oklch(17.9% 0.0261 266.47);
 
-  --color-brand-50: rgba(243, 254, 231, 1);
-  --color-brand-100: rgba(227, 251, 204, 1);
-  --color-brand-200: rgba(208, 248, 171, 1);
-  --color-brand-300: rgba(166, 239, 103, 1);
-  --color-brand-400: rgba(133, 225, 58, 1);
-  --color-brand-500: rgba(102, 198, 28, 1);
-  --color-brand-600: rgba(76, 163, 13, 1);
-  --color-brand-700: rgba(59, 124, 15, 1);
-  --color-brand-800: rgba(50, 98, 18, 1);
-  --color-brand-900: rgba(43, 83, 20, 1);
-  --color-brand-950: rgba(21, 41, 10, 1);
+  --color-brand-50: rgba(249, 245, 255, 1);
+  --color-brand-100: rgba(244, 235, 255, 1);
+  --color-brand-200: rgba(233, 215, 254, 1);
+  --color-brand-300: rgba(214, 187, 251, 1);
+  --color-brand-400: rgba(182, 146, 246, 1);
+  --color-brand-500: rgba(158, 119, 237, 1);
+  --color-brand-600: rgba(127, 86, 217, 1);
+  --color-brand-700: rgba(105, 65, 198, 1);
+  --color-brand-800: rgba(83, 56, 158, 1);
+  --color-brand-900: rgba(66, 48, 125, 1);
+  --color-brand-950: rgba(44, 28, 95, 1);
 
   --color-error-50: oklch(97.25% 0.0119 23.7);
   --color-error-100: oklch(93.94% 0.0288 22.95);
