@@ -6,7 +6,6 @@ import ScanningStep from "@/modules/onboarding/components/scanning-step";
 import SuccessStep from "@/modules/onboarding/components/success-step";
 import WelcomeStep from "@/modules/onboarding/components/welcome-step";
 import WorldStep from "@/modules/onboarding/components/world-step";
-import { createWorldSchema } from "@/schemas/world";
 import { useTRPC } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { defineStepper } from "@stepperize/react";
@@ -14,34 +13,20 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { onboardingSteps } from "../config/onboarding-steps";
 
 export default function OnboardingModal() {
   const [open, setOpen] = useState(true);
   const trpc = useTRPC();
 
-  const { useStepper } = defineStepper(
-    {
-      id: "onboarding-welcome",
-      schema: z.object({}),
-    },
-    {
-      id: "onboarding-world",
-      schema: createWorldSchema,
-    },
-    {
-      id: "onboarding-scanning",
-      schema: z.object({}),
-    },
-    {
-      id: "onboarding-success",
-      schema: z.object({}),
-    },
-  );
+  const { useStepper } = defineStepper(...onboardingSteps);
 
   const stepper = useStepper();
 
   const createWorldMutation = useMutation(trpc.world.create.mutationOptions());
-  const myMutation2 = useMutation(trpc.user.finishOnboarding.mutationOptions());
+  const completeOnboardingMutation = useMutation(
+    trpc.user.completeOnboarding.mutationOptions(),
+  );
 
   const form = useForm({
     mode: "onTouched",
@@ -62,20 +47,27 @@ export default function OnboardingModal() {
 
           stepper.next();
         } catch (err) {
-          console.log("failed to crteate world", err);
+          handleError(err, "create world");
         }
         break;
 
       case "onboarding-success":
         try {
-          myMutation2.mutate();
+          await completeOnboardingMutation.mutateAsync();
           setOpen(false);
         } catch (err) {
-          console.log("failed to complete onboarding", err);
+          handleError(err, "complete onboarding");
         }
         break;
     }
   };
+
+  const isSubmitting =
+    createWorldMutation.isPending || completeOnboardingMutation.isPending;
+
+  function handleError(error: unknown, context: string) {
+    console.log(`Error in ${context}`, error);
+  }
 
   return (
     <Dialog open={open}>
@@ -116,13 +108,12 @@ export default function OnboardingModal() {
               <Button
                 type="submit"
                 className="w-full"
-                isLoading={createWorldMutation.isPending}
+                isLoading={isSubmitting}
                 disabled={
-                  stepper.current.id === "onboarding-scanning" ||
-                  createWorldMutation.isPending
+                  stepper.current.id === "onboarding-scanning" || isSubmitting
                 }
               >
-                {stepper.isLast ? "Finish" : "Continue"}
+                {stepper.isLast ? "Complete" : "Continue"}
               </Button>
             </DialogFooter>
           </form>

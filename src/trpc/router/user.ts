@@ -4,7 +4,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
 export const userRouter = {
-  finishOnboarding: protectedProcedure.mutation(
+  completeOnboarding: protectedProcedure.mutation(
     async ({ ctx }) =>
       await ctx.db
         .update(user)
