@@ -6,6 +6,7 @@ import ScanningStep from "@/modules/onboarding/components/scanning-step";
 import SuccessStep from "@/modules/onboarding/components/success-step";
 import WelcomeStep from "@/modules/onboarding/components/welcome-step";
 import WorldStep from "@/modules/onboarding/components/world-step";
+import { createWorldSchema } from "@/schemas/world";
 import { useTRPC } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { defineStepper } from "@stepperize/react";
@@ -13,12 +14,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-
-const schema1 = z.object({
-  worldName: z.string().min(1),
-});
-
-export type Schema1Values = z.infer<typeof schema1>;
 
 export default function OnboardingModal() {
   const [open, setOpen] = useState(true);
@@ -31,7 +26,7 @@ export default function OnboardingModal() {
     },
     {
       id: "onboarding-world",
-      schema: schema1,
+      schema: createWorldSchema,
     },
     {
       id: "onboarding-scanning",
@@ -45,7 +40,7 @@ export default function OnboardingModal() {
 
   const stepper = useStepper();
 
-  const myMutation = useMutation(trpc.world.create.mutationOptions());
+  const createWorldMutation = useMutation(trpc.world.create.mutationOptions());
   const myMutation2 = useMutation(trpc.user.finishOnboarding.mutationOptions());
 
   const form = useForm({
@@ -63,7 +58,7 @@ export default function OnboardingModal() {
 
       case "onboarding-world":
         try {
-          await myMutation.mutateAsync({ name: values.worldName });
+          await createWorldMutation.mutateAsync({ name: values.name });
 
           stepper.next();
         } catch (err) {
@@ -121,8 +116,11 @@ export default function OnboardingModal() {
               <Button
                 type="submit"
                 className="w-full"
-                isLoading={myMutation.isPending}
-                disabled={stepper.current.id === "onboarding-scanning"}
+                isLoading={createWorldMutation.isPending}
+                disabled={
+                  stepper.current.id === "onboarding-scanning" ||
+                  createWorldMutation.isPending
+                }
               >
                 {stepper.isLast ? "Finish" : "Continue"}
               </Button>

@@ -4,14 +4,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { Schema1Values } from "@/modules/onboarding/components/onboarding-modal";
+import type { CreateWorldSchema } from "@/schemas/world";
 import { CircleCheckIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
 export default function SuccessStep() {
-  const { getValues } = useFormContext<Schema1Values>();
+  const { getValues } = useFormContext<CreateWorldSchema>();
 
-  const { worldName } = getValues();
+  const { name } = getValues();
   return (
     <DialogHeader className="mb-5">
       <div className="relative mb-4">
@@ -23,7 +23,7 @@ export default function SuccessStep() {
       <div className="text-center space-y-0.5  z-10">
         <DialogTitle>Shop connected</DialogTitle>
         <DialogDescription>
-          <span className="font-semibold">{worldName}</span> is now linked to
+          <span className="font-semibold">{name}</span> is now linked to
           Grotics. We’ll track your earnings and alert you when stock runs out.
         </DialogDescription>
       </div>

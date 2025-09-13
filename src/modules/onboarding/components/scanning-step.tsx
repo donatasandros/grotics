@@ -23,19 +23,20 @@ const steps = [
 
 export default function ScanningStep({ next }: ScanningStepProps) {
   const { getValues } = useFormContext<Schema1Values>();
-  const trpc = useTRPC()
+  const trpc = useTRPC();
 
   const { worldName } = getValues();
 
-  const { data, isRefetching } = useQuery(trpc.world.status.queryOptions({
-    name: worldName,
-    
-  }, {
-    refetchInterval: 3000,
-    
-
-  }))
-  
+  const { data, isRefetching } = useQuery(
+    trpc.world.status.queryOptions(
+      {
+        name: worldName,
+      },
+      {
+        refetchInterval: 3000,
+      },
+    ),
+  );
 
   const currentStepIndex = steps.findIndex((s) => s.key === data);
 
@@ -64,7 +65,6 @@ export default function ScanningStep({ next }: ScanningStepProps) {
         </div>
       </DialogHeader>
       <div className="mb-5 flex flex-col gap-3 z-10">
-      
         {steps.map((step, index) => (
           <div key={step.key} className="flex items-center gap-2">
             {index === currentStepIndex ? (

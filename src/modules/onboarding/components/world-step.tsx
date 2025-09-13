@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { Schema1Values } from "@/modules/onboarding/components/onboarding-modal";
+import type { CreateWorldSchema } from "@/schemas/world";
 import { StoreIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
@@ -14,7 +14,7 @@ export default function WorldStep() {
   const {
     register,
     formState: { errors },
-  } = useFormContext<Schema1Values>();
+  } = useFormContext<CreateWorldSchema>();
 
   return (
     <>
@@ -35,18 +35,16 @@ export default function WorldStep() {
       </DialogHeader>
       <div className="mb-5 z-10">
         <div className="space-y-1">
-          <Label htmlFor={register("worldName").name}>World name</Label>
+          <Label htmlFor={register("name").name}>World name</Label>
           <Input
             type="text"
-            id={register("worldName").name}
-            {...register("worldName")}
+            id={register("name").name}
+            {...register("name")}
             placeholder="SHOPWORLD123"
-            aria-invalid={!!errors.worldName}
+            aria-invalid={!!errors.name}
           />
-          {errors.worldName && (
-            <span className="text-sm text-red-500">
-              {errors.worldName.message}
-            </span>
+          {errors.name && (
+            <span className="text-sm text-red-500">{errors.name.message}</span>
           )}
         </div>
       </div>
