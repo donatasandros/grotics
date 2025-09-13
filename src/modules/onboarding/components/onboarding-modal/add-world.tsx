@@ -23,7 +23,10 @@ export function AddWorld() {
           <div className="size-12 mx-auto bg-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-950 shadow-xs-skeumorphic rounded-[10px] flex items-center justify-center">
             <StoreIcon className="size-6 text-gray-700 dark:text-gray-300" />
           </div>
-          <ConcentricCircles aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " />
+          <ConcentricCircles
+            aria-hidden
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
+          />
         </div>
         <div className="text-center space-y-0.5 z-10">
           <DialogTitle>Add your shop</DialogTitle>
@@ -44,7 +47,9 @@ export function AddWorld() {
             aria-invalid={!!errors.name}
           />
           {errors.name && (
-            <span className="text-sm text-error-600 dark:text-error-400">{errors.name.message}</span>
+            <span className="text-sm text-error-600 dark:text-error-400">
+              {errors.name.message}
+            </span>
           )}
         </div>
       </div>
