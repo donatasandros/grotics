@@ -14,7 +14,7 @@ import { defineStepper } from "@stepperize/react";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import { z } from "zod";
 
 export default function OnboardingModal() {
   const [open, setOpen] = useState(true);
@@ -54,9 +54,11 @@ export default function OnboardingModal() {
                 description: err.message,
               });
             },
+            onSuccess: () => {
+              stepper.next();
+            },
           },
         );
-        stepper.next();
         break;
 
       case "complete":
@@ -68,8 +70,10 @@ export default function OnboardingModal() {
               description: err.message,
             });
           },
+          onSuccess: () => {
+            setOpen(false);
+          },
         });
-        setOpen(false);
         break;
     }
   };
@@ -90,9 +94,9 @@ export default function OnboardingModal() {
                 complete: () => <Complete />,
               })}
             </div>
-            <div className="flex items-center gap-4 justify-center relative z-10">
+            <ul className="flex items-center gap-4 justify-center relative z-10">
               {stepper.all.map((step) => (
-                <div
+                <li
                   key={step.id}
                   aria-current={
                     stepper.current.id === step.id ? "step" : undefined
@@ -105,7 +109,7 @@ export default function OnboardingModal() {
                   )}
                 />
               ))}
-            </div>
+            </ul>
 
             <DialogFooter className="mt-6 md:mt-8">
               <Button

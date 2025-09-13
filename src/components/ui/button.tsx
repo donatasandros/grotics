@@ -77,7 +77,6 @@ function Button({
   return (
     <Comp
       data-icon-only={isIcon ? true : undefined}
-      {...props}
       data-slot="button"
       className={cn(buttonVariants({ size, variant, className }))}
       {...props}

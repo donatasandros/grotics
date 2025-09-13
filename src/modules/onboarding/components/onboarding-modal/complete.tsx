@@ -19,7 +19,10 @@ export function Complete() {
         <div className="size-12 mx-auto bg-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-950 shadow-xs-skeumorphic rounded-[10px] flex items-center justify-center">
           <CircleCheckIcon className="size-6  text-gray-700 dark:text-gray-300" />
         </div>
-        <ConcentricCircles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " />
+        <ConcentricCircles
+          aria-hidden
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
+        />
       </div>
       <div className="text-center space-y-0.5  z-10">
         <DialogTitle>Shop connected</DialogTitle>

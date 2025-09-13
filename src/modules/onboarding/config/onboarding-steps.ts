@@ -1,5 +1,5 @@
 import { createWorldSchema } from "@/schemas/world";
-import z from "zod";
+import { z } from "zod";
 
 export const onboardingSteps = [
   {

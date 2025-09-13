@@ -71,7 +71,7 @@ export default function NavUser({ user }: NavUserProps) {
                 state === "collapsed" && !isMobile && "hidden",
               )}
             >
-              <EllipsisVerticalIcon className="size-4" />
+              <EllipsisVerticalIcon className="size-4" aria-hidden="true" />
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent

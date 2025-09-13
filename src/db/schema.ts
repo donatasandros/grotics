@@ -107,7 +107,7 @@ export const vend = pgTable("vend", {
   isOutOfStock: boolean("is_out_of_stock").notNull(),
   hasWls: boolean("has_wls").notNull(),
   position: text("position").notNull(),
-  disabled: boolean("active").notNull().default(false),
+  disabled: boolean("disabled").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()

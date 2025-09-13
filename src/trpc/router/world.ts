@@ -9,7 +9,7 @@ export const worldRouter = {
     .input(createWorldSchema)
     .mutation(async ({ ctx, input }) => {
       const existingWorld = await ctx.db.query.world.findFirst({
-        where: (world, { eq }) => eq(world.name, input.name),
+        where: (w, { eq }) => eq(w.name, input.name),
       });
 
       if (existingWorld) {
@@ -20,10 +20,15 @@ export const worldRouter = {
         });
       }
 
-      return await ctx.db.insert(world).values({
-        name: input.name,
-        userId: ctx.session.user.id,
-      });
+      const [created] = await ctx.db
+        .insert(world)
+        .values({
+          name: input.name,
+          userId: ctx.session.user.id,
+        })
+        .returning({ id: world.id, name: world.name });
+
+      return created;
     }),
   status: protectedProcedure
     .input(z.object({ name: z.string() }))
