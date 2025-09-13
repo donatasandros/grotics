@@ -65,15 +65,14 @@ export default function NavUser({ user }: NavUserProps) {
                 {user.email}
               </span>
             </div>
-            <button
-              type="button"
+            <span
               className={cn(
                 "p-1.5 absolute right-2 top-2 text-gray-400 dark:text-gray-600",
                 state === "collapsed" && !isMobile && "hidden",
               )}
             >
-              <EllipsisVerticalIcon className="size-4" />
-            </button>
+              <EllipsisVerticalIcon className="size-4" aria-hidden="true" />
+            </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             side={isMobile ? "top" : "right"}

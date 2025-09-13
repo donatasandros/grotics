@@ -14,7 +14,7 @@ export default function AppHeader() {
       <button
         type="button"
         onClick={toggleSidebar}
-        className="p-2 rounded-lg outline-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200"
+        className="p-2 rounded-lg outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200"
       >
         <MenuIcon className="size-6" />
       </button>

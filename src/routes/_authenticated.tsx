@@ -1,6 +1,7 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppHeader from "@/modules/dashboard/components/app-header";
 import AppSidebar from "@/modules/dashboard/components/app-sidebar";
+import OnboardingModal from "@/modules/onboarding/components/onboarding-modal";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
@@ -30,10 +31,14 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function LayoutComponent() {
-  const { sidebarState } = Route.useRouteContext();
+  const {
+    sidebarState,
+    session: { user },
+  } = Route.useRouteContext();
 
   return (
     <SidebarProvider defaultOpen={sidebarState}>
+      {!user.hasOnboarded && <OnboardingModal />}
       <AppSidebar />
       <SidebarInset className="md:peer-data-[state=collapsed]:pl-[calc(72px)] max-w-[1216px] mx-auto">
         <AppHeader />
