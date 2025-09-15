@@ -24,7 +24,7 @@ export default function OverviewCards({ items }: OverviewCardsProps) {
     },
     {
       title: "Largest sale",
-      value: `${Math.max(...items.map((t) => t.wlsEarned))} WLS`,
+      value: items.length > 0 ? `${Math.max(...items.map((t) => t.wlsEarned))} WLS` : '0 WLS',
       icon: TrophyIcon,
     },
   ];
