@@ -35,6 +35,14 @@ const buttonVariants = cva(
   },
 );
 
+export type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+    isLoading?: boolean;
+    iconLeading?: React.FC<{ className?: string }> | React.ReactNode;
+    iconTrailing?: React.FC<{ className?: string }> | React.ReactNode;
+  };
+
 function Button({
   className,
   variant,
@@ -46,13 +54,7 @@ function Button({
   children,
   disabled,
   ...otherProps
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-    isLoading?: boolean;
-    iconLeading?: React.FC<{ className?: string }> | React.ReactNode;
-    iconTrailing?: React.FC<{ className?: string }> | React.ReactNode;
-  }) {
+}: ButtonProps) {
   const href = "href" in otherProps ? otherProps.href : undefined;
   const Comp = href ? "a" : asChild ? Slot : "button";
 
@@ -95,4 +97,3 @@ function Button({
 }
 
 export { Button, buttonVariants };
-
