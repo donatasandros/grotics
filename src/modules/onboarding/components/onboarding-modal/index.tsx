@@ -110,7 +110,6 @@ export default function OnboardingModal() {
                 />
               ))}
             </ul>
-
             <DialogFooter className="mt-6 md:mt-8">
               <Button
                 type="submit"

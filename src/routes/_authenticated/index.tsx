@@ -1,10 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import OverviewCards from "@/modules/dashboard/components/overview-cards";
 import { useTRPC } from "@/trpc/react";
 import { getInitials } from "@/utils/get-initials";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronRightIcon, ListFilterIcon } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/")({
   loader: async ({ context }) =>
@@ -63,6 +64,23 @@ function RouteComponent() {
         </div>
       </section>
       <OverviewCards items={transactions} />
+      <section className="flex flex-col">
+        <div className="flex md:justify-between flex-col md:flex-row gap-4 md:items-center">
+          <div className="space-y-2">
+            {/* <p>net revenue</p> */}
+            <Button variant="linkGray" size='sm' className="[&>svg]:size-4" iconTrailing={ChevronDownIcon}>Net revenue</Button>
+            <p className="font-semibold text-gray-900 dark:text-gray-50 text-3xl">100 WLS</p>
+          </div>
+          <div className="flex gap-3">
+            <div className="flex">
+              <p>12 months</p>
+              <p>30 days</p>
+            </div>
+            <Button variant="secondary" size="sm" iconLeading={ListFilterIcon}>Filters</Button>
+          </div>
+        </div>
+        <div>graph</div>
+      </section>
     </div>
   );
 }
