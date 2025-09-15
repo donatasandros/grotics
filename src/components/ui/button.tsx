@@ -6,14 +6,14 @@ import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
 const buttonVariants = cva(
-  "group relative inline-flex h-max items-center justify-center whitespace-nowrap before:absolute outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none *:[&>svg]:size-5 [&>svg]:shrink-0",
+  "group relative inline-flex  items-center justify-center whitespace-nowrap before:absolute outline-brand-500 dark:outline-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-gray-400 dark:disabled:text-gray-500 [&>svg]:pointer-events-none *:[&>svg]:size-5 [&>svg]:shrink-0",
   {
     variants: {
       size: {
-        sm: "gap-1 rounded-lg px-3 py-2 text-sm font-semibold before:rounded-[7px] data-icon-only:p-2",
-        md: "gap-1 rounded-lg px-3.5 py-2.5 text-sm font-semibold before:rounded-[7px] data-icon-only:p-2.5",
-        lg: "gap-1.5 rounded-lg px-4 py-2.5 text-base font-semibold before:rounded-[7px] data-icon-only:p-3",
-        xl: "gap-1.5 rounded-lg px-4.5 py-3 text-base font-semibold before:rounded-[7px] data-icon-only:p-3.5",
+        sm: "gap-1 h-9 rounded-lg px-3 py-2 text-sm font-semibold before:rounded-[7px] data-icon-only:p-2",
+        md: "gap-1 h-10 rounded-lg px-3.5 py-2.5 text-sm font-semibold before:rounded-[7px] data-icon-only:p-2.5",
+        lg: "gap-1.5 h-11 rounded-lg px-4 py-2.5 text-base font-semibold before:rounded-[7px] data-icon-only:p-3",
+        xl: "gap-1.5 h-12 rounded-lg px-4.5 py-3 text-base font-semibold before:rounded-[7px] data-icon-only:p-3.5",
       },
       variant: {
         primary:
@@ -23,9 +23,9 @@ const buttonVariants = cva(
         tertiary:
           "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800",
         linkGray:
-          "text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
+          "h-max! text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
         linkColor:
-          "text-brand-700 dark:text-gray-300 hover:text-brand-800 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
+          "h-max! text-brand-700 dark:text-gray-300 hover:text-brand-800 dark:hover:text-gray-300 hover:underline hover:underline-offset-2 p-0! rounded",
       },
     },
     defaultVariants: {
@@ -95,3 +95,4 @@ function Button({
 }
 
 export { Button, buttonVariants };
+
